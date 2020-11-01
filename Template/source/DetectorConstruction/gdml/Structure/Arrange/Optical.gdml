@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- 
+       Scintillator.gdml
+    包含: 一般材料和光学材料的定义
+    包含: 光学界面定义, boarder surface / skin surface
+    注意测试此例子，需要将入射粒子改为 opticalphoton，命令如下：
+    /gun/particle opticalphoton
+    /gun/momentum 0 0.2 1.5 eV
+    /gun/polarization 1 0 0
+    /run/beamOn 100
+-->
+
+<!DOCTYPE gdml [
+    <!ENTITY Element SYSTEM "./Material/Predefined/Element.xml">
+    <!ENTITY Materials SYSTEM "./Material/Material.xml">
+    <!ENTITY OptAir SYSTEM "./Material/Predefined/Opticals/lists/OptAir.xml">
+    <!ENTITY OptQuartz SYSTEM "./Material/Predefined/Opticals/lists/OptQuartz.xml">
+    <!ENTITY OptAcrylic SYSTEM "./Material/Predefined/Opticals/lists/OptAcrylic.xml">
+    <!ENTITY ScinLS SYSTEM "./Material/Predefined/Scintillator/lists/ScinLS.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+    <!--materials-->
+    &Element;
+    &Materials;
+    &OptAir;
+    &OptQuartz;
+    &OptAcrylic;
+    &ScinLS;
+    <define>
+        <variable name="XYSize" value="200" />
+        <variable name="LSSizeZ" value="100" />
+        <variable name="AcrySizeZ" value="200" />
+        <variable name="Offset" value="0" />
+
+        <position name="Acrypos" unit="mm" x="0" y="0" z="Offset + LSSizeZ/2 + AcrySizeZ/2" />
+        <position name="LSpos" unit="mm" x="0" y="0" z="Offset" />
+
+        <!-- surface 参数举例，仅供参考，需根据实际情况来调整 -->
+        <matrix name="REFLECTIVITY" coldim="2" values="1.65*eV 1.0" />
+        <matrix name="TRANSMITTANCE" coldim="2" values="1.65*eV 0.0" />
+        <matrix name="EFFICIENCY" coldim="2" values="1.65*eV 0.0" />
+        <matrix name="SURFACEROUGHNESS" coldim="1" values="0.00001" />
+        <matrix name="SPECULARLOBECONSTANT" coldim="2" values="1.65*eV 0.0" />
+        <matrix name="SPECULARSPIKECONSTANT" coldim="2" values="1.65*eV 0.0" />
+        <matrix name="BACKSCATTERCONSTANT" coldim="2" values="1.65*eV 0.0" />
+
+    </define>
+
+    <solids>
+        <box lunit="mm" name="world" x="10000" y="10000" z="10000" />
+        <box lunit="mm" name="LS" x="XYSize" y="XYSize" z="LSSizeZ" />
+        <box lunit="mm" name="Acry" x="XYSize" y="XYSize" z="AcrySizeZ" />
+
+        <!-- surface 举例 -->
+        <opticalsurface name="surf1" model="glisur" finish="polished" type="dielectric_dielectric" value="1.0">
+            <property name="REFLECTIVITY" ref="REFLECTIVITY" />
+            <property name="TRANSMITTANCE" ref="TRANSMITTANCE" />
+            <property name="EFFICIENCY" ref="EFFICIENCY" />
+            <property name="SURFACEROUGHNESS" ref="SURFACEROUGHNESS" />
+            <property name="SPECULARLOBECONSTANT" ref="SPECULARLOBECONSTANT" />
+            <property name="SPECULARSPIKECONSTANT" ref="SPECULARSPIKECONSTANT" />
+            <property name="BACKSCATTERCONSTANT" ref="BACKSCATTERCONSTANT" />
+        </opticalsurface>
+
+        <opticalsurface name="surf2" model="glisur" finish="polished" type="dielectric_metal" value="1.0">
+            <property name="REFLECTIVITY" ref="REFLECTIVITY" />
+        </opticalsurface>
+
+    </solids>
+
+
+    <structure>
+        <volume name="AcryBox">
+            <materialref ref="OptAir" />
+            <solidref ref="Acry" />
+            <auxiliary auxtype="setColor" auxvalue="kRed" auxunit="-2" />
+            <auxiliary auxtype="setAlpha" auxvalue="1.0" />
+        </volume>
+
+        <volume name="LSBox">
+            <materialref ref="OptQuartz" />
+            <solidref ref="LS" />
+            <auxiliary auxtype="setColor" auxvalue="kYellow" auxunit="2" />
+            <auxiliary auxtype="setAlpha" auxvalue="1.0" />
+        </volume>
+
+        <volume name="World">
+            <materialref ref="OptAir" />
+            <solidref ref="world" />
+
+            <physvol name="AcryBoxLog">
+                <volumeref ref="AcryBox" />
+                <positionref ref="Acrypos" />
+            </physvol>
+
+            <physvol name="LSBoxLog">
+                <volumeref ref="LSBox" />
+                <positionref ref="LSpos" />
+            </physvol>
+        </volume>
+
+
+        <bordersurface name="bordersrf1" surfaceproperty="surf1">
+            <physvolref ref="LSBoxLog" />
+            <physvolref ref="AcryBoxLog" />
+        </bordersurface>
+
+        <!-- SkinSurface 例子 -->
+        <!--
+        <skinsurface name="skinsrf1" surfaceproperty="surf2">
+            <volumeref ref="AcryBox" />
+        </skinsurface>
+        -->
+
+
+    </structure>
+
+    <setup name="Default" version="1.0">
+        <world ref="World" />
+    </setup>
+</gdml>

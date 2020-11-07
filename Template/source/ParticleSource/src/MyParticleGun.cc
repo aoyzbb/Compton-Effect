@@ -37,12 +37,12 @@ MyParticleGun::MyParticleGun()
 
     //#PartGun 2. 初始化变量
     G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
-    G4ParticleDefinition *particle = particleTable->FindParticle("e-");
+    G4ParticleDefinition *particle = particleTable->FindParticle("gamma");
 
     fParticleGun->SetParticleDefinition(particle);
-    fParticleGun->SetParticleEnergy(1.0 * GeV);
-    fParticleGun->SetParticlePosition(G4ThreeVector(0, 0, 0));
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.0, 0.0, 0.0));
+    fParticleGun->SetParticleEnergy(0.642 * MeV);
+    fParticleGun->SetParticlePosition(G4ThreeVector(0, -1, 0));
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0, 1.0, 0.0));
 
     GunType = 0; //a simple flag for gun type: 0 for simple gun, 1 for read from root file.
 }

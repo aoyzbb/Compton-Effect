@@ -43,6 +43,7 @@ MyAnalysisMessenger::MyAnalysisMessenger()
     fSelectCmd4 = new G4UIcmdWithoutParameter("/MyRun/DeactiveRootBasedManager", this);
     fSelectCmd4->SetGuidance("do not use the ROOT tree to store the data");
     fSelectCmd4->AvailableForStates(G4State_PreInit, G4State_Idle);
+
 }
 
 MyAnalysisMessenger::~MyAnalysisMessenger()
@@ -67,7 +68,7 @@ void MyAnalysisMessenger::SetNewValue(G4UIcommand *command, G4String newValues)
     if (command == fFileNameCmd2)
     {
         G4cout << "\n---> Set analysis output root-file name: " << newValues << G4endl;
-        MyAnalysisManager::GetInstance()->SetRootBasedFileName(newValues);
+//        MyAnalysisManager::GetInstance()->SetRootBasedFileName(newValues);
     }
 
     if (command == fSelectCmd1)
@@ -85,12 +86,12 @@ void MyAnalysisMessenger::SetNewValue(G4UIcommand *command, G4String newValues)
     if (command == fSelectCmd3)
     {
         G4cout << "\n---> Use the root tree to store the data. " << G4endl;
-        MyAnalysisManager::GetInstance()->RootBasedActivated();
+//        MyAnalysisManager::GetInstance()->RootBasedActivated();
     }
 
     if (command == fSelectCmd4)
     {
         G4cout << "\n---> Do not use the root tree to store the data. " << G4endl;
-        MyAnalysisManager::GetInstance()->RootBasedDeactivated();
+//        MyAnalysisManager::GetInstance()->RootBasedDeactivated();
     }
 }

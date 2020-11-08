@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- 
+       EMCal.gdml
+    包含: 一般材料的定义
+    包含: CsI阵列
+    包含: Region的定义及cut
+    包含: 探测器的颜色显示控制
+-->
+
+<!DOCTYPE gdml [
+    <!ENTITY Element SYSTEM "./Material/Predefined/Element.xml">
+    <!ENTITY Materials SYSTEM "./Material/Material.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+    <!--materials-->
+    &Element;
+    &Materials;
+
+    <define>
+        <variable name="AlRadius" value="10" />
+        <variable name="Alheight" value="100" />
+
+        <variable name="NaIX" value="50" />
+        <variable name="NaIY" value="250" />
+      <variable name="NaIZ" value="50" />
+       
+       <variable name="Hand" value="250" />
+    </define>
+
+    <solids>
+        <box lunit="mm" name="WorldBox" x="10000" y="10000" z="10000" />
+        <box lunit="mm" name="NaIBox" x="NaIX" y="NaIY" z="NaIZ" />
+         <tube lunit="mm" name="AlTube" rmin="0" rmax="AlRadius" z="Alheight" deltaphi="360" />
+    </solids>
+
+    <structure>
+
+          <volume name="NaILog">
+            <materialref ref="NaI" />
+            <solidref ref="NaIBox" />
+        </volume>
+
+          <volume name="AlLog">
+            <materialref ref="Aluminium" />
+            <solidref ref="AlTube" />
+        </volume>
+
+
+        <volume name="World">
+            <materialref ref="Air" />
+            <solidref ref="WorldBox" />
+
+           <physvol>
+                <volumeref ref="AlLog" />
+                <position x="0." y="0." z="0." unit="mm" />
+            </physvol>
+
+            <physvol>
+                <volumeref ref="NaILog" />
+                <position x="Hand*cos(pi/3)" y="Hand*sin(pi/3)" z="0" unit="mm" />
+                <rotation x="0" y="0." z="-150" unit="deg" />
+            </physvol>
+
+
+
+        </volume>
+    </structure>
+
+    <setup name="Default" version="1.0">
+        <world ref="World" />
+    </setup>
+</gdml>

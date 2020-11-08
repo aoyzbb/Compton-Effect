@@ -11,7 +11,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-build/
+
 debug/
 output/
 develop-eggs/
@@ -112,7 +112,7 @@ ENV/
 .mypy_cache/
 
 # root file
-*.root
+
 *.dat
 
 #data

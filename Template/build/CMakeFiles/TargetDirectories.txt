@@ -1,0 +1,10 @@
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/install/strip.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/list_install_components.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/SimEvent-dictgen.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/install/local.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/GDMLFrame.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/install.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/gdmlDet.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/edit_cache.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/SimEventDict.dir
+/home/ao/workstation/Compton-Effect/Template/build/CMakeFiles/rebuild_cache.dir

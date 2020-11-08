@@ -1,0 +1,3 @@
+[ libSimEventDict.so ]
+# List of selected classes
+class SimEvent

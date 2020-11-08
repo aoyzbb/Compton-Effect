@@ -1,0 +1,410 @@
+<!-- 
+	预定义的材料包括：
+	1. 真空：Vacuum
+	2. 气体：Air, N2Gas, ArGas, XeGas, CO2Gas, Methane, Butane
+	3. 混合气： P10, ArgonCO2(70:30), ArgonIso(97:3) (质量比)
+	4. 液体：Water, H2Liquid, N2Liquid, ArLiquid, XeLiquid
+	5. 单质：Beryllium, Graphite, Aluminium, Silicon, IronBar, Copper, Germanium, Silver, Gold, Lead
+	6. 合金：Havar, Kovar, SSteel
+	7. 非金属： Rock, Concrete, Ceramics, Wood
+	8. 探测器：Epoxy, G10, FR4, Kapton, Bakelite, Mylar, AlMylar(铝膜)
+	9. 晶体：BGO, LSO, CsI, NaI, LaBr3, GAGG, LYSO
+	10. 中微子实验： LS, GdLS, Acrylic, ESR, Tyvek, MineralOil
+
+	注： 混合气密度计算：设两种物质密度分别为ρ1、ρ2，质量混合比分别为a%、b%，混合质量为M，则V1=Ma%/ρ1，V2=Mb%/ρ2，混合密度ρ=M/(V1+V2)=ρ1ρ2/(ρ2a%+ρ1b%)
+		混合气密度计算：设两种物质密度分别为ρ1、ρ2，体积混合比分别为a%、b%，混合体积为V，则M1=ρ1*V*a%，M2=ρ2*V*b%，混合密度ρ=(M1+M2)/V=ρ1a%+ρ2b%
+		             此时体积混合比的比例要换为质量比例： ρ1*a% : ρ2*b% 
+-->
+
+<materials>
+
+	<!-- Material -->
+	<!-- Common Gas   -->
+	<material name="Vacuum" Z="1">
+		<D unit="g/cm3" value="9.9999999999999998e-17" />
+		<atom unit="g/mole" value="1.008" />
+	</material>
+
+	<material name="Air">
+		<D value="0.001" />
+		<fraction n="0.7" ref="elNitrogen" />
+		<fraction n="0.3" ref="elOxygen" />
+	</material>
+
+	<material formula="N2Gas" name="N2Gas">
+		<D value="0.00125" />
+		<composite n="1" ref="elNitrogen" />
+	</material>
+
+	<material formula="ArGas" name="ArGas">
+		<D value="0.001782" />
+		<composite n="1" ref="elArgon" />
+	</material>
+
+	<material formula="XeGas" name="XeGas">
+		<D value="0.005887" />
+		<composite n="1" ref="elXenon" />
+	</material>
+
+	<material formula="CO2" name="CO2Gas">
+		<D value="0.001997" />
+		<composite n="2" ref="elOxygen" />
+		<composite n="1" ref="elCarbon" />
+	</material>
+
+	<material formula="CH4" name="Methane">
+		<D value="0.000717" />
+		<composite n="1" ref="elCarbon" />
+		<composite n="4" ref="elHydrogen" />
+	</material>
+
+	<material formula="C4H10" name="Butane">
+		<D value="0.00242" />
+		<composite n="4" ref="elCarbon" />
+		<composite n="10" ref="elHydrogen" />
+	</material>
+
+	<!-- |        -->
+	<!-- |- Gas Mixture   -->
+
+	<material formula="Ar_CH4" name="P10">
+		<D value="0.001782 * 0.000717 / (0.001782 * 0.1 + 0.000717 * 0.9)" />
+		<fraction n="0.90" ref="ArGas" />
+		<fraction n="0.10" ref="Methane" />
+	</material>
+
+	<material formula="Ar_CO2" name="ArgonCO2">
+		<D value="0.001782 * 0.001997 / (0.001782 * 0.1 + 0.001997 * 0.9)" />
+		<fraction n="0.90" ref="ArGas" />
+		<fraction n="0.10" ref="CO2Gas" />
+	</material>
+
+	<material formula="Ar_C4H10" name="ArgonIso">
+		<D value="0.001782 * 0.00242 / (0.001782 * 0.03 + 0.00242 * 0.97)" />
+		<fraction n="0.97" ref="ArGas" />
+		<fraction n="0.03" ref="Butane" />
+	</material>
+
+	<!-- |        -->
+	<!-- Liquid   -->
+	<material name="Water">
+		<D value="1.0" />
+		<composite n="2" ref="elHydrogen" />
+		<composite n="1" ref="elOxygen" />
+	</material>
+
+	<material name="H2Liquid">
+		<D value="0.0708" />
+		<composite n="1" ref="elHydrogen" />
+	</material>
+
+	<material name="N2Liquid">
+		<D value="0.8" />
+		<composite n="1" ref="elNitrogen" />
+	</material>
+
+	<material name="ArLiquid">
+		<D value="1.390" />
+		<composite n="1" ref="elArgon" />
+	</material>
+
+	<material name="XeLiquid">
+		<D value="3.02" />
+		<composite n="1" ref="elXenon" />
+	</material>
+
+	<!-- |        -->
+	<!-- simple materials (one element)   -->
+	<material name="Beryllium">
+		<D value="1.9860" />
+		<composite n="1" ref="elBeryllium" />
+	</material>
+
+	<material name="Graphite">
+		<D value="1.7" />
+		<composite n="1" ref="elCarbon" />
+	</material>
+
+	<material name="Aluminium">
+		<D value="2.7" />
+		<composite n="1" ref="elAluminium" />
+	</material>
+
+	<material name="Silicon">
+		<D value="2.33" />
+		<composite n="1" ref="elSilicon" />
+	</material>
+
+	<material name="IronBar">
+		<D value="7.874" />
+		<composite n="1" ref="elIron" />
+	</material>
+
+	<material name="Copper">
+		<D value="8.96" />
+		<composite n="1" ref="elCopper" />
+	</material>
+
+	<material name="Germanium">
+		<D value="5.35" />
+		<composite n="1" ref="elGermanium" />
+	</material>
+
+	<material name="Silver">
+		<D value="1.135" />
+		<composite n="1" ref="elSilver" />
+	</material>
+
+	<material name="Tungsten">
+		<D value="19.3" />
+		<composite n="1" ref="elTungsten" />
+	</material>
+
+	<material name="Gold">
+		<D value="19.3" />
+		<composite n="1" ref="elGold" />
+	</material>
+
+	<material name="Lead">
+		<D value="11.34" />
+		<composite n="1" ref="elLead" />
+	</material>
+
+
+	<!-- |        -->
+	<!-- Solid metal -->
+
+	<material name="Havar">
+		<D value="8.3" />
+		<fraction n="0.1785" ref="elChromium" />
+		<fraction n="0.1822" ref="elIron" />
+		<fraction n="0.4452" ref="elCobalt" />
+		<fraction n="0.1310" ref="elNickel" />
+		<fraction n="0.0631" ref="elTungsten" />
+	</material>
+
+	<material name="Kovar">
+		<D value="8.3" />
+		<fraction n="0.29000" ref="elNickel" />
+		<fraction n="0.17000" ref="elCobalt" />
+		<fraction n="0.00500" ref="elManganese" />
+		<fraction n="0.00200" ref="elSilicon" />
+		<fraction n="0.00025" ref="elSulfur" />
+		<fraction n="0.00200" ref="elChromium" />
+		<fraction n="0.00200" ref="elCopper" />
+		<fraction n="0.00200" ref="elMolybdenum" />
+		<fraction n="0.00100" ref="elZirconium" />
+		<fraction n="0.00025" ref="elPhosphorus" />
+		<fraction n="0.00060" ref="elCarbon" />
+		<fraction n="0.52490" ref="elIron" />
+	</material>
+
+	<material name="SSteel">
+		<!-- 不锈钢 -->
+		<D value="7.7" />
+		<fraction n="0.88" ref="elIron" />
+		<fraction n="0.08" ref="elCobalt" />
+		<fraction n="0.04" ref="elCarbon" />
+	</material>
+
+	<!-- |        -->
+	<!-- Solid nonmetal -->
+
+	<material name="Rock">
+		<D value="2.8" />
+		<fraction n="0.4660" ref="elOxygen" />
+		<fraction n="0.2772" ref="elSilicon" />
+		<fraction n="0.0813" ref="elAluminium" />
+		<fraction n="0.0500" ref="elIron" />
+		<fraction n="0.0363" ref="elCalcium" />
+		<fraction n="0.0283" ref="elSodium" />
+		<fraction n="0.0259" ref="elPotassium" />
+		<fraction n="0.0209" ref="elMagnesium" />
+		<fraction n="0.0141" ref="elCarbon" />
+	</material>
+
+	<material name="Concrete">
+		<!-- 混凝土 -->
+		<D value="2.3" />
+		<fraction n="0.227915" ref="elSilicon" />
+		<fraction n="0.605410" ref="elOxygen" />
+		<fraction n="0.099720" ref="elHydrogen" />
+		<fraction n="0.049860" ref="elCalcium" />
+		<fraction n="0.014245" ref="elAluminium" />
+		<fraction n="0.002850" ref="elIron" />
+	</material>
+
+	<material name="Ceramics">
+		<D value="2.88" />
+		<composite n="2" ref="elAluminium" />
+		<composite n="3" ref="elOxygen" />
+	</material>
+
+	<material name="SiO2">
+		<D value="2.64" />
+		<composite n="1" ref="elSilicon" />
+		<composite n="2" ref="elOxygen" />
+	</material>
+
+	<material name="Wood">
+		<D value="0.9" />
+		<composite n="4" ref="elHydrogen" />
+		<composite n="1" ref="elOxygen" />
+		<composite n="2" ref="elCarbon" />
+	</material>
+
+	<material name="Kapton">
+		<D value="1.11" />
+		<composite n="8" ref="elHydrogen" />
+		<composite n="2" ref="elOxygen" />
+		<composite n="5" ref="elCarbon" />
+	</material>
+
+	<material name="Epoxy">
+		<D value="1.3" />
+		<composite n="44" ref="elHydrogen" />
+		<composite n="7" ref="elOxygen" />
+		<composite n="15" ref="elCarbon" />
+	</material>
+
+	<material name="G10">
+		<D value="1.7" />
+		<fraction n="0.773" ref="SiO2" />
+		<fraction n="0.147" ref="Epoxy" />
+		<fraction n="0.08" ref="elChlorine" />
+	</material>
+
+	<material name="FR4">
+		<D value="1.025" />
+		<fraction n="0.613" ref="SiO2" />
+		<fraction n="0.147" ref="Epoxy" />
+		<fraction n="0.08" ref="elBromine" />
+		<fraction n="0.160" ref="elOxygen" />
+	</material>
+
+	<material name="Bakelite">
+		<D value="1.3" />
+		<composite n="8" ref="elHydrogen" />
+		<composite n="1" ref="elOxygen" />
+		<composite n="7" ref="elCarbon" />
+	</material>
+
+	<material name="Mylar">
+		<D value="1.39" />
+		<composite n="4" ref="elHydrogen" />
+		<composite n="2" ref="elOxygen" />
+		<composite n="5" ref="elCarbon" />
+	</material>
+
+	<material name="AlMylar">
+		<D value="1." />
+		<fraction n="0.8" ref="Mylar" />
+		<fraction n="0.2" ref="elAluminium" />
+	</material>
+		  
+	<!-- |        -->
+	<!-- Crystal/Scintillator  -->
+
+	<material formula="Bi4Ge3O12" name="BGO">
+		<D value="7.10" />
+		<composite n="12" ref="elOxygen" />
+		<composite n="3" ref="elGermanium" />
+		<composite n="4" ref="elBismuth" />
+	</material>
+
+	<material formula="Lu2SiO5" name="LSO">
+		<D value="7.40" />
+		<composite n="5" ref="elOxygen" />
+		<composite n="2" ref="elLutetium" />
+		<composite n="1" ref="elSilicon" />
+	</material>
+
+	<material formula="CsI" name="CsI">
+		<D value="4.53" />
+		<composite n="1" ref="elCaesium" />
+		<composite n="1" ref="elIodine" />
+	</material>
+
+	<material formula="NaI" name="NaI">
+		<D value="3.67" />
+		<composite n="1" ref="elSodium" />
+		<composite n="1" ref="elIodine" />
+	</material>
+
+	<material formula="LaBr3" name="LaBr3">
+		<D value="5.06" />
+		<composite n="1" ref="elLanthanum" />
+		<composite n="3" ref="elBromine" />
+	</material>
+
+	<material formula="Gd2Al2Ga3O12" name="GAGG">
+		<D value="6.63" />
+		<composite n="3" ref="elGadolinium" />
+		<composite n="2" ref="elAluminium" />
+		<composite n="3" ref="elGallium" />
+		<composite n="12" ref="elOxygen" />
+	</material>
+
+	<!--  LYSO:Ce,   Assuming Lu2(x-1)Y2(x)SiO5:Ce. x=10%, Ce=5%. -->
+	<!--  So, Ce=5%, LYSO=95%.(mole faction) => mass fraction: Ce=0.19%, LYSO=99.91% -->
+	<material formula="Lu2(x-1)Y2(x)SiO5" name="LYSO_sin">
+		<D value="7.1" />
+		<fraction n="0.71" ref="elLutetium" />
+		<fraction n="0.04" ref="elYttrium" />
+		<fraction n="0.07" ref="elSilicon" />
+		<fraction n="0.18" ref="elOxygen" />
+	</material>
+
+	<material formula="LYSO:Ce" name="LYSO">
+		<D value="7.1" />
+		<fraction n="0.9981" ref="LYSO_sin" />
+		<fraction n="0.0019" ref="elCerium" />
+	</material>
+
+	<!-- |        -->
+	<!-- JUNO & Dayabay related  -->
+	<material name="LS">
+		<D value="0.859" />
+		<fraction n="0.87924" ref="elCarbon" />
+		<fraction n="0.12010" ref="elHydrogen" />
+		<fraction n="0.00034" ref="elOxygen" />
+		<fraction n="0.00027" ref="elNitrogen" />
+		<fraction n="0.00005" ref="elSulfur" />
+	</material>
+
+	<material name="GdLS">
+		<D value="0.8602" />
+		<fraction n="0.87705" ref="elCarbon" />
+		<fraction n="0.12051" ref="elHydrogen" />
+		<fraction n="0.00109" ref="elOxygen" />
+		<fraction n="0.0010315" ref="elGadolinium" />
+		<fraction n="0.00027" ref="elNitrogen" />
+		<fraction n="0.00005" ref="elSulfur" />
+	</material>
+
+	<material name="Acrylic">
+		<D value="1.18" />
+		<fraction n="0.59984" ref="elCarbon" />
+		<fraction n="0.08055" ref="elHydrogen" />
+		<fraction n="0.31961" ref="elOxygen" />
+	</material>
+
+	<material name="ESR">
+		<D value="1.0" />
+		<composite n="1" ref="elCarbon" />
+		<composite n="2" ref="elHydrogen" />
+	</material>
+
+	<material name="Tyvek">
+		<D value="0.94" />
+		<composite n="1" ref="elCarbon" />
+		<composite n="2" ref="elHydrogen" />
+	</material>
+
+	<material name="MineralOil">
+		<D value="0.8511" />
+		<fraction n="0.86475" ref="elCarbon" />
+		<fraction n="0.13525" ref="elHydrogen" />
+</material>
+
+</materials>

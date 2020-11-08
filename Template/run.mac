@@ -13,7 +13,7 @@
 #   1. 用G4自带的ntuple保存(G4Based)
 #   2. 用root+自定义类的方式保存(RootBased)
 #-----
-/MyRun/SetG4BasedFileName result.root
+/MyRun/SetG4BasedFileName result2.root
 /MyRun/SetRootBasedFileName output.root
 /MyRun/ActiveG4BasedManager
 /MyRun/DeactiveRootBasedManager
@@ -33,5 +33,5 @@
 /gun/position 0 -100 0 mm
 /gun/particle gamma
 /gun/direction 0 1 0
-/gun/energy 0.62 MeV
-/run/beamOn 10000
+/gun/energy 2 eV
+/run/beamOn 1000000
